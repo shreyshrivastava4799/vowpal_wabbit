@@ -1,11 +1,12 @@
 <img src="/logo_assets/vowpal-wabbits-github-logo@3x.png" height="auto" width="100%" alt="Vowpal Wabbit">
 
-[![Build Status](https://travis-ci.org/VowpalWabbit/vowpal_wabbit.svg?branch=master)](https://travis-ci.org/VowpalWabbit/vowpal_wabbit)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/6hqpd9e64h72gybr/branch/master?svg=true)](https://ci.appveyor.com/project/JohnLangford/vowpal-wabbit/branch/master)
+[![Linux Build Status)](https://img.shields.io/azure-devops/build/vowpalwabbit/3934113c-9e2b-4dbc-8972-72ab9b9b4342/23/master?label=Linux%20build&logo=Azure%20Devops)](https://dev.azure.com/vowpalwabbit/Vowpal%20Wabbit/_build?definitionId=23)
+[![Windows Build Status](https://img.shields.io/azure-devops/build/vowpalwabbit/3934113c-9e2b-4dbc-8972-72ab9b9b4342/14/master?label=Windows%20build&logo=Azure%20Devops)](https://dev.azure.com/vowpalwabbit/Vowpal%20Wabbit/_build?definitionId=14)
+[![MacOS Build Status](https://img.shields.io/azure-devops/build/vowpalwabbit/3934113c-9e2b-4dbc-8972-72ab9b9b4342/22/master?label=MacOS%20build&logo=Azure%20Devops)](https://dev.azure.com/vowpalwabbit/Vowpal%20Wabbit/_build?definitionId=22)
 
 [![Coverage Status](https://coveralls.io/repos/github/VowpalWabbit/vowpal_wabbit/badge.svg?branch=master)](https://coveralls.io/github/VowpalWabbit/vowpal_wabbit?branch=master)
 [![Total Alerts](https://img.shields.io/lgtm/alerts/g/JohnLangford/vowpal_wabbit.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/JohnLangford/vowpal_wabbit/alerts/)
-[![Gitter chat](https://badges.gitter.im/VowpalWabbit.png)](https://gitter.im/VowpalWabbit)
+[![Gitter chat](https://img.shields.io/gitter/room/VowpalWabbit/community)](https://gitter.im/VowpalWabbit)
 
 This is the *Vowpal Wabbit* fast online learning code.
 
