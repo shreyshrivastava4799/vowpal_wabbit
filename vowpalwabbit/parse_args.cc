@@ -370,7 +370,14 @@ void parse_diagnostics(options_i& options, vw& all)
   // Upon direct query for version -- spit it out to stdout
   if (version_arg)
   {
+    std::string hash_func("all");
+    all.p->hasher = getHasher(hash_func);
+
     std::cout << VW::version.to_string() << " (git commit: " << VW::git_commit << ")\n";
+    
+    std::string author("Shrey Shrivastava");
+    std::cout << "My name is " << author << " and my hash is " << all.p->hasher(author.c_str(), author.length(), 0)<< "\n";
+
     exit(0);
   }
 
@@ -1664,6 +1671,7 @@ vw* initialize(
 
   try
   {
+
     // if user doesn't pass in a model, read from options
     io_buf localModel;
     if (!model)
