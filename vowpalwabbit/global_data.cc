@@ -407,6 +407,7 @@ vw::vw()
 
   add_constant = true;
   audit = false;
+  tensorboard = false;
 
   pass_length = std::numeric_limits<size_t>::max();
   passes_complete = 0;

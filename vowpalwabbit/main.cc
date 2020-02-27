@@ -21,6 +21,7 @@
 #include "options.h"
 #include "options_boost_po.h"
 
+
 using namespace VW::config;
 
 vw* setup(options_i& options)
@@ -63,8 +64,12 @@ vw* setup(options_i& options)
   return all;
 }
 
+
 int main(int argc, char* argv[])
 {
+
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
   bool should_use_onethread = false;
   option_group_definition driver_config("driver");
   driver_config.add(make_option("onethread", should_use_onethread).help("Disable parse thread"));
@@ -156,5 +161,8 @@ int main(int argc, char* argv[])
     exit(1);
   }
   // cin.ignore();
+
+  // Optional:  Delete all global objects allocated by libprotobuf.
+  google::protobuf::ShutdownProtobufLibrary();
   return 0;
 }

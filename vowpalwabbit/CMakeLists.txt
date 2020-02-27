@@ -37,8 +37,10 @@ search_dep_parser.h search_entityrelationtask.h search_graph.h search_hooktask.h
 search_multiclasstask.h search_sequencetask.h search.h sender.h shared_feature_merger.h
 simple_label.h spanning_tree.h stable_unique.h stagewise_poly.h svrg.h topk.h unique_sort.h
 v_array.h version.h vw_allreduce.h vw_exception.h vw_validate.h vw_versions.h vw.h
-vwdll.h warm_cb.h vw_string_view.h
+vwdll.h warm_cb.h vw_string_view.h crc.h 
 )
+
+
 
 set(vw_all_sources
   accumulate.cc action_score.cc active_cover.cc active.cc audit_regressor.cc autolink.cc baseline.cc
@@ -55,14 +57,19 @@ set(vw_all_sources
   recall_tree.cc scorer.cc search_dep_parser.cc search_entityrelationtask.cc search_graph.cc
   search_hooktask.cc search_meta.cc search_multiclasstask.cc search_sequencetask.cc search.cc
   sender.cc shared_feature_merger.cc simple_label.cc stagewise_poly.cc svrg.cc topk.cc unique_sort.cc
-  version.cc vw_exception.cc vw_validate.cc warm_cb.cc
+  version.cc vw_exception.cc vw_validate.cc warm_cb.cc crc.cc  
 )
 
-add_library(vw ${vw_all_sources} ${vw_all_headers})
+# adding support for protobuf
+find_package(Protobuf REQUIRED)
+include_directories(${PROTOBUF_INCLUDE_DIRS})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS event.proto resource_handle.proto summary.proto tensor.proto tensor_shape.proto types.proto)
+add_library(vw tensorboard_logger.cc tensorboard_logger.h ${vw_all_sources} ${vw_all_headers} ${PROTO_SRCS} ${PROTO_HDRS})
 
 target_link_libraries(vw
   PUBLIC
-    VowpalWabbit::explore VowpalWabbit::allreduce Boost::boost
+    VowpalWabbit::explore VowpalWabbit::allreduce Boost::boost ${PROTOBUF_LIBRARIES} 
   PRIVATE
     Boost::program_options ${CMAKE_DL_LIBS} ${LINK_THREADS} ZLIB::ZLIB
     # Workaround an issue where RapidJSON needed to be exported tom install the target. This is
@@ -153,7 +160,11 @@ endif()
 # build main executable
 add_executable(vw-bin main.cc)
 target_link_libraries(vw-bin PRIVATE VowpalWabbit::vw Boost::program_options)
+
+
 set_target_properties(vw-bin PROPERTIES OUTPUT_NAME vw)
+
+
 
 if(STATIC_LINK_VW)
   target_link_libraries(vw-bin PRIVATE ${unix_static_flag})

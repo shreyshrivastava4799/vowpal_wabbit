@@ -29,6 +29,7 @@ const char* to_string(prediction_type_t prediction_type);
 
 namespace LEARNER
 {
+
 template <class T, class E>
 struct learner;
 

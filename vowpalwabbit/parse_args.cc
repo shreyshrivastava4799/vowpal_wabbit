@@ -367,6 +367,7 @@ void parse_diagnostics(options_i& options, vw& all)
   if (all.all_reduce)
     all.all_reduce->quiet = all.quiet;
 
+
   // Upon direct query for version -- spit it out to stdout
   if (version_arg)
   {
@@ -1113,13 +1114,21 @@ void parse_output_preds(options_i& options, vw& all)
 {
   std::string predictions;
   std::string raw_predictions;
+  bool tensorboard = false;
 
   option_group_definition output_options("Output options");
   output_options.add(make_option("predictions", predictions).short_name("p").help("File to output predictions to"))
+      .add(make_option("tensorboard", tensorboard).short_name("tb").help("Using tensorboard"))
       .add(make_option("raw_predictions", raw_predictions)
                .short_name("r")
                .help("File to output unnormalized predictions to"));
   options.add_and_parse(output_options);
+
+  if (options.was_supplied("tensorboard"))
+  {
+    all.tensorboard = true;
+    all.logger = new TensorBoardLogger("demo/tfevents.pb");
+  }  
 
   if (options.was_supplied("predictions"))
   {

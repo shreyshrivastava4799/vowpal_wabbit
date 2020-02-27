@@ -34,8 +34,14 @@ namespace LEARNER
 {
 void learn_ex(example& ec, vw& all)
 {
+  static int index = 0; 
+
   all.learn(ec);
   as_singleline(all.l)->finish_example(all, ec);
+
+  if(all.tensorboard)
+    all.logger->add_scalar("acc", index++, all.sd->sum_loss);
+
 }
 
 void learn_multi_ex(multi_ex& ec_seq, vw& all)

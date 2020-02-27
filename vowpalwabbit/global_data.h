@@ -48,6 +48,9 @@
 #include "options.h"
 #include "version.h"
 
+#include "tensorboard_logger.h"
+
+
 typedef float weight;
 
 typedef std::unordered_map<std::string, std::unique_ptr<features>> feature_dict;
@@ -353,6 +356,9 @@ struct vw
  public:
   shared_data* sd;
 
+  TensorBoardLogger* logger;
+
+
   parser* p;
   std::thread parse_thread;
 
@@ -466,6 +472,7 @@ struct vw
       namespace_dictionaries{};  // each namespace has a list of dictionaries attached to it
 
   void (*delete_prediction)(void*);
+  bool tensorboard;
   bool audit;     // should I print lots of debugging information?
   bool quiet;     // Should I suppress progress-printing of updates?
   bool training;  // Should I train if lable data is available?
