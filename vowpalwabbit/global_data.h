@@ -322,7 +322,6 @@ enum AllReduceType
 
 class AllReduce;
 
-
 enum class label_type_t
 {
   simple,
@@ -348,6 +347,18 @@ struct rand_state
   void set_random_state(uint64_t initial) noexcept { random_state = initial; }
 };
 
+struct vw_logger
+{
+  bool quiet;
+
+  vw_logger()
+    : quiet(false) {
+  }
+
+  vw_logger(const vw_logger& other) = delete;
+  vw_logger& operator=(const vw_logger& other) = delete;
+};
+
 struct vw
 {
  private:
@@ -356,7 +367,7 @@ struct vw
  public:
   shared_data* sd;
 
-  TensorBoardLogger* logger;
+  TensorBoardLogger* log;
 
 
   parser* p;
@@ -472,9 +483,10 @@ struct vw
       namespace_dictionaries{};  // each namespace has a list of dictionaries attached to it
 
   void (*delete_prediction)(void*);
+
   bool tensorboard;
+  vw_logger logger;
   bool audit;     // should I print lots of debugging information?
-  bool quiet;     // Should I suppress progress-printing of updates?
   bool training;  // Should I train if lable data is available?
   bool active;
   bool invariant_updates;  // Should we use importance aware/safe updates
@@ -539,7 +551,7 @@ struct vw
   bool progress_add;   // additive (rather than multiplicative) progress dumps
   float progress_arg;  // next update progress dump multiplier
 
-  std::map<std::string, size_t> name_index_map;
+  std::map<uint64_t, std::string> index_name_map;
 
   label_type_t label_type;
 

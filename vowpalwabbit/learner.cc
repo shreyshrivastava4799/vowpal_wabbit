@@ -40,7 +40,7 @@ void learn_ex(example& ec, vw& all)
   as_singleline(all.l)->finish_example(all, ec);
 
   if(all.tensorboard)
-    all.logger->add_scalar("acc", index++, all.sd->sum_loss);
+    all.log->add_scalar("acc", index++, all.sd->sum_loss);
 
 }
 
@@ -66,7 +66,7 @@ void save(example& ec, vw& all)
   if ((ec.tag).size() >= 6 && (ec.tag)[4] == '_')
     final_regressor_name = std::string(ec.tag.begin() + 5, (ec.tag).size() - 5);
 
-  if (!all.quiet)
+  if (!all.logger.quiet)
     all.trace_message << "saving regressor to " << final_regressor_name << std::endl;
   save_predictor(all, final_regressor_name, 0);
 
